@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+      
+      <div id="rules">
+
+      </div>
+      <div class="game">
+        <div class="chooseSize">
+
+        </div>
+        <div class="preferences">
+          <form action="">
+            <div class="flex-container">
+              <div class="preference">
+                <label for="sizeOfTheGridSelect">Size</label>
+                <select name="sizeOfTheGridSelect" id="sizeOfTheGridSelect" onChange="changeGridSize()">
+                  <option value="3">3</option>
+                  <option value="4" selected>4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
+              <div class="preference">
+                <label for="numberOfGreensSelect">Number of Greens</label>
+                <select name="numberOfGreensSelect" id="numberOfGreensSelect" onChange="changeNumberOfGreens()">
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5" selected>5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="startGameButton">
+          <button onClick="playGame()">Play game</button>
+        </div>
+
+        <div class="grid">
+          <div id="left" class="left">
+            <div id="upperLeft" class="upperLeft gameGrid question"></div>
+            <div id="lowerLeft" class="lowerLeft gameGrid question"></div>
+          </div>
+          <div id="right" class="right">
+            <div id="upperRight" class="upperRight gameGrid answer"></div>
+            <div id="lowerRight" class="lowerRight gameGrid answer"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id=testing>
+        <div>
+          
+        </div>
+      </div>
+    
+    <script src="js/script.js" async defer></script>
+  </body>
+</html>
