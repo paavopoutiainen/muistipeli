@@ -3,6 +3,7 @@ var correctLower = [];
 var sizeOfTheGrid = 4;
 var numberOfGreens = 5;
 var points = 0;
+var greensClicked = 0;
 
 const createGameGrids = () => {
   //Getting divs into which grid of blocks will be created at
@@ -144,7 +145,8 @@ const handleRightSideClick = (idNumber, gridItem) => {
     gridItem.style.backgroundColor = "red";
   }
   givePoints(blockInfo, correctArray, idNumber)
-  if(points === numberOfGreens * 2){
+  console.log(points)
+  if(greensClicked === numberOfGreens * 2){
     disableOnClickEvents()
     showResults()
   }
@@ -162,6 +164,7 @@ const givePoints = (blockInfo, correctArray, idNumber) => {
   if(!blockInfo.checked) {
     correctArray[idNumber].checked = true
     if(blockInfo.green) {
+      greensClicked++
       points++;
     } else {
       points--;
