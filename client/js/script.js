@@ -3,13 +3,16 @@ var correctLower = [];
 var sizeOfTheGrid = 4;
 var numberOfGreens = 5;
 var points = 0;
+var totalPoints = 0;
 var greensClicked = 0;
+var time = 4;
+var gameIsOnTimeout;
+var gameIsOnPromiseTimeout;
 
 const createGameGrids = () => {
   //Getting divs into which grid of blocks will be created at
   const gameGridDivsHTMLCollection = document.getElementsByClassName("gameGrid")
   var arr = Array.prototype.slice.call( gameGridDivsHTMLCollection )
-  console.log("hehehehe")
   
   //Looping through divs and creating blocks into each
   arr.forEach(div => {
@@ -21,9 +24,11 @@ const createGameGrids = () => {
       let gridItem = parent.document.createElement("div");
       let classList = div.className.split(/\s+/);
       if(classList.includes("answer")){
+        div.style.visibility = "hidden";
         gridItem.className += `${div.id} gameGridItem`
         gridItem.onclick = () => handleRightSideClick(i, gridItem)
       } else {
+        div.style.visibility = "visible"
         gridItem.className += `${div.id} gameGridItem`
       }
       const newIdWithNumber = `${div.id}${i}`
@@ -54,6 +59,10 @@ const getRandomizedGreensArray = () => {
   return array
 }
 
+const disableButton = () => {
+
+}
+
 const checkIfGreenHasToBeGiven = (index, numberOfGreens, numberOfGivenGreens, numberOfBlocksInTheGrid) => {
   const indexesLeft = numberOfBlocksInTheGrid - index;
   const numberOfGreensYetToBeGiven = numberOfGreens - numberOfGivenGreens;
@@ -68,8 +77,13 @@ const checkIfGreenCanBeGiven = (numberOfGreens, numberOfGivenGreens) => {
   } else return false;
 }
 
-//Handling play game button click
-const playGame = async () => {
+//Handling start game button click
+const startGame = async () => {
+  const startButtonElement = document.getElementById("startButton")
+  startButtonElement.disabled = true
+  const resetButtonElement = document.getElementById("resetButton")
+  resetButtonElement.disabled = false
+
   //Filling global arrays of 
   correctUpper = getRandomizedGreensArray();
   correctLower = getRandomizedGreensArray();
@@ -87,18 +101,18 @@ const handleLeftSide = () => {
   const lowerLeftBlockNodes = lowerLeftDiv.childNodes
   const lowerLeftBlocksArray = Array.from(lowerLeftBlockNodes)
 
+  const timeAsMilliseconds = time * 1000;
+
   showGreens(upperLeftBlocksArray, correctUpper);
-  setTimeout(() => {
+  gameIsOnTimeout = setTimeout(() => {
     setBackToWhites(upperLeftBlocksArray)
     showGreens(lowerLeftBlocksArray, correctLower);
-  }, 4000)
-  setTimeout(() => {
-    setBackToWhites(lowerLeftBlocksArray)
-  }, 8000)
+  }, timeAsMilliseconds)
+  
   return new Promise(resolve => {
-    setTimeout(() => {
+    gameIsOnPromiseTimeout = setTimeout(() => {
       resolve()
-    }, 8000)
+    }, timeAsMilliseconds * 2)
   })
 }
 
@@ -135,7 +149,7 @@ const showRightSideHideLeftSide = () => {
 /*Check if clicked block was green or not and give points accordingly */
 const handleRightSideClick = (idNumber, gridItem) => {
   
-  //Figure out which grid was blocked 
+  //Figure out which grid was clicked
   const classList = gridItem.className.split(/\s+/);
   const correctArray = classList.includes("upperRight") ? correctUpper : correctLower;
   const blockInfo = correctArray[idNumber]
@@ -145,11 +159,21 @@ const handleRightSideClick = (idNumber, gridItem) => {
     gridItem.style.backgroundColor = "red";
   }
   givePoints(blockInfo, correctArray, idNumber)
-  console.log(points)
+
   if(greensClicked === numberOfGreens * 2){
-    disableOnClickEvents()
-    showResults()
+    handleEndOfRound()
   }
+}
+
+const handleEndOfRound = () => {
+  disableOnClickEvents()
+  totalPoints += points
+  showPoints()
+  handleButtonsEndOfRound()
+}
+
+const handleButtonsEndOfRound = () => {
+  document.getElementById("resetButton").innerHTML = "New Game"
 }
 
 const disableOnClickEvents = () => {
@@ -170,6 +194,31 @@ const givePoints = (blockInfo, correctArray, idNumber) => {
       points--;
     }
   } 
+  showPoints()
+}
+
+const showPoints = () => {
+  const roundPointsElement = document.getElementById("roundPoints")
+  const totalPointsElement = document.getElementById("totalPoints")
+
+  roundPointsElement.innerHTML = points
+  totalPointsElement.innerHTML = totalPoints
+}
+
+const resetGame = () => {
+  clearTimeout(gameIsOnTimeout)
+  clearTimeout(gameIsOnPromiseTimeout)
+  const resetButtonElement = document.getElementById("resetButton")
+  if(resetButtonElement.innerHTML === "New Game") {
+    resetButtonElement.innerHTML = "Reset Game"
+  }
+  createGameGrids()
+  correctUpper = [];
+  correctLower = [];
+  points = 0;
+  greensClicked = 0;
+  const startButtonElement = document.getElementById("startButton")
+  startButtonElement.disabled = false
 }
 
 //Handling user's changes in preferences
@@ -184,6 +233,12 @@ const changeNumberOfGreens = () => {
   const newValue = document.getElementById("numberOfGreensSelect").value
   const newValueAsNumber = parseInt(newValue)
   numberOfGreens = newValueAsNumber
+}
+
+const changeSeconds = () => {
+  const newValue = document.getElementById("seconds").value
+  const newValueAsNumber = parseInt(newValue)
+  time = newValueAsNumber
 }
 
 createGameGrids();

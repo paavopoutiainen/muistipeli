@@ -1,19 +1,14 @@
 
-
-#mainHeader{
-  color: red;
-}
-
 .layoutGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 10% 50% 40%;
   max-width: 1100px;
   margin: 0 auto;  
-  background-color: lightblue;
+  background-color: rgb(255, 255, 255);
 }
 
-.layoutUpper{
+.layoutUpper {
   grid-row-start: 1;
   grid-row-end: 2;
   grid-column-start: 1;
@@ -33,9 +28,12 @@
 
 .layoutResults {
   grid-row-start: 2;
-  grid-row-end: 3;
+  grid-row-end: 2;
   grid-column-start: 3;
   grid-column-end: 4;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
 }
 
 .grid {
@@ -45,9 +43,8 @@
   height: 600px;
   max-width: 100%;
   color: black;
-  background-color: lightgray;
+  background-color: rgb(233, 241, 241);
 }
-
 
 .gameGrid {
   display: grid;
@@ -57,8 +54,9 @@
   margin: 5px 0;
 }
 
-.results {
-  height: 600px;  
+.points {
+  font-size: 40px;
+  text-align: center;
 }
 
 .gameGridItem {
@@ -79,7 +77,6 @@
 }
 
 .answer {
-  visibility: hidden;
 }
 
 .chooseSize {
@@ -90,16 +87,36 @@
   
 }
 
+.results {
+  text-align: center;
+}
+
 .startGameButtonDiv {
   grid-row-start:2;
   grid-row-end: 3;
   margin-bottom: 5px;
 }
 
-.startGameButton {
+.resetGameButtonDiv {
+  grid-row-start:2;
+  grid-row-end: 3;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  margin-bottom: 5px;
+}
+
+.gameButton {
   width: 100%;
   height: 100%;
-  
+}
+
+
+
+.preferences {
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 1;
+  grid-column-end: 4;
 }
 
 .flex-container {
@@ -110,13 +127,13 @@
   margin: 5px;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 510px) {
  
 
   .layoutGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 10% 45% 45%;
+    grid-template-rows: 15% 50% 30%;
   }
 
   .layoutUpper{
@@ -124,6 +141,9 @@
     grid-row-end: 2;
     grid-column-start: 1;
     grid-column-end: 4;
+    display:grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     
   }
   
@@ -139,6 +159,10 @@
     grid-row-end: 4;
     grid-column-start: 1;
     grid-column-end: 4;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    height: 400px;
   }
 
   .grid {

@@ -49,14 +49,30 @@
                       <option value="10">10</option>
                     </select>
                   </div>
+                  <div class="preference">
+                    <label for="timeSelect">Time/seconds</label>
+                    <select name="seconds" id="seconds" onChange="changeSeconds()">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4" selected>4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                    </select>
+                  </div>
                 </div>
               </form>
             </div>
             <div class="startGameButtonDiv">
-              <button class="startGameButton" onClick="playGame()">Play game</button>
+              <button id="startButton" class="gameButton" onClick="startGame()">Start game</button>
             </div>
-              
-            
+            <div class="resetGameButtonDiv">
+              <button disabled id="resetButton" class="gameButton" onClick="resetGame()">Reset game</button>
+            </div>
           </div>
 
           <div class="game layoutGameGrid">
@@ -73,7 +89,14 @@
           </div>
 
           <div class="results layoutResults">
-            hello
+            <div >
+              <h3>Points of the round</h3>     
+              <p id="roundPoints" class="points"></p>
+            </div>
+            <div>
+              <h3>Total points</h3>
+              <p id="totalPoints" class="points"></p>
+            </div>
           </div>
 
         </div>
