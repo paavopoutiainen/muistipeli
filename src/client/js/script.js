@@ -8,6 +8,7 @@ var greensClicked = 0;
 var time = 4;
 var gameIsOnTimeout;
 var gameIsOnPromiseTimeout;
+var handlers = []
 
 const createGameGrids = () => {
   //Getting divs into which grid of blocks will be created at
@@ -44,7 +45,7 @@ const getRandomizedGreensArray = () => {
   const array = [];
   const numberOfBlocksInTheGrid = sizeOfTheGrid ** 2;
   let numberOfGivenGreens = 0
-  for (i = 0; i < numberOfBlocksInTheGrid; i++) {
+  for (var i = 0; i < numberOfBlocksInTheGrid; i++) {
     /*Creating proper ratio for randomizing greens*/
     const ratio = numberOfGreens / numberOfBlocksInTheGrid;
     const greenOrNotBoolean = !(Math.random() >= ratio);
@@ -159,7 +160,6 @@ const handleRightSideClick = (idNumber, gridItem) => {
     gridItem.style.backgroundColor = "red";
   }
   givePoints(blockInfo, correctArray, idNumber)
-
   if(greensClicked === numberOfGreens * 2){
     handleEndOfRound()
   }
@@ -179,7 +179,7 @@ const handleButtonsEndOfRound = () => {
 const disableOnClickEvents = () => {
   const gameGridItems = document.getElementsByClassName("gameGridItem")
   const gameGridItemsArray = Array.from(gameGridItems)
-  gameGridItemsArray.forEach(block => {
+  gameGridItemsArray.forEach((block, i) => {
     block.onclick = "";
   })
 }
@@ -240,6 +240,15 @@ const changeSeconds = () => {
   const newValueAsNumber = parseInt(newValue)
   time = newValueAsNumber
 }
+
+//Adding eventlisteners
+const startButton = document.getElementById("startButton")
+const resetButton = document.getElementById("resetButton")
+const sizeSelectElement = document.getElementById("sizeOfTheGridSelect").addEventListener("change", changeGridSize)
+const numberOfGreensSelectElement = document.getElementById("numberOfGreensSelect").addEventListener("change", changeNumberOfGreens)
+const timeSelectElement = document.getElementById("seconds").addEventListener("change", changeSeconds)
+resetButton.addEventListener("click", resetGame)
+startButton.addEventListener("click", startGame)
 
 createGameGrids();
 
